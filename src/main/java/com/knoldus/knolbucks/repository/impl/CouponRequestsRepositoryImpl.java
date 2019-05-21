@@ -3,13 +3,8 @@ package com.knoldus.knolbucks.repository.impl;
 import com.knoldus.knolbucks.Persons;
 import com.knoldus.knolbucks.model.CouponRequests;
 import com.knoldus.knolbucks.repository.CouponRequestsRepository;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import org.davidmoten.rx.jdbc.Database;
-import org.davidmoten.rx.jdbc.ResultSetMapper;
 import reactor.core.publisher.Flux;
-
-import java.sql.Timestamp;
 
 public class CouponRequestsRepositoryImpl implements CouponRequestsRepository {
 
@@ -18,13 +13,13 @@ public class CouponRequestsRepositoryImpl implements CouponRequestsRepository {
         return db;
     }
 
-    void findAll() {
-        getDBObject().select("select * from coupon_requests").autoMap(CouponRequests.class).blockingForEach(System.out::println);
+    Flux<CouponRequests> findAll() {
+        return Flux.fromIterable(getDBObject().select("select * from coupon_requests").autoMap(CouponRequests.class).blockingIterable());
     }
 
     public static void main(String[] args) {
         CouponRequestsRepositoryImpl obj = new CouponRequestsRepositoryImpl();
 
-        obj.findAll();
+        obj.findAll().toStream().forEach(System.out::println);
     }
 }

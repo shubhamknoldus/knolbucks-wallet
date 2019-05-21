@@ -1,5 +1,7 @@
 package com.knoldus.knolbucks;
 
+/*TODO: NJ - This is just a sample model created for testing purpose so will be removed*/
+
 public class Persons {
     int personID;
     String lastName,FirstName,Address,City;

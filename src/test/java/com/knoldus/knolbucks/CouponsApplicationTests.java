@@ -12,7 +12,7 @@ public class CouponsApplicationTests {
 
     @Test
     public void contextLoads() {
-        Database db = Database.from("jdbc:mysql://localhost:3306/nancy?user=root&password=mysql", 10);
+        Database db = Database.from("jdbc:mysql://localhost:3306/knolbucks?user=root&password=root", 10);
         db.select("select LastName from Persons")
                .getAs(String.class).blockingForEach(System.out::println);
 

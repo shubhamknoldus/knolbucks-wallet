@@ -22,7 +22,6 @@ public interface CouponRequests {
     @Column("requestedON")
     Timestamp requestedON();
 
-    //    Date approvedON;
     @Column
     Integer quantity();
 

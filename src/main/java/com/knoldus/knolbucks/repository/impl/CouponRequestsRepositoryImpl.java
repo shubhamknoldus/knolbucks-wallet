@@ -19,6 +19,7 @@ public class CouponRequestsRepositoryImpl implements CouponRequestsRepository {
         return Flux.fromIterable(getDBObject().select("select * from coupon_requests").autoMap(CouponRequests.class).blockingIterable());
     }
 
+    //NJ - This is a sample code and hence has some hard coded sample data. We can make changes accordingly whenever implementing the complete routes as per the finalized schema.
     boolean insert() {
         Timestamp time = new Timestamp(new Date().getTime());
         return getDBObject().update("insert into coupon_requests values('3', 'rid2', 'iid2', ?, 3, 2)")

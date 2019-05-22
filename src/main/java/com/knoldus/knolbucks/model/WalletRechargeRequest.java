@@ -6,27 +6,27 @@ import java.sql.Timestamp;
 
 public interface WalletRechargeRequest {
 
-    @Column
+    @Column("id")
     String id();
 
-    @Column
+    @Column("wallet_id")
     String walletID();
 
-    @Column
+    @Column("requester_id")
     String requesterID();
 
-    @Column
+    @Column("issuer_id")
     String issuerID();
 
-    @Column
+    @Column("requested_on")
     Timestamp requestedOn();
 
-    @Column
+    @Column("approved_on")
     Timestamp approvedOn();
 
-    @Column
+    @Column("quantity")
     Integer quantity();
 
-    @Column
+    @Column("status")
     String status();
 }

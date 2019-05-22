@@ -2,6 +2,7 @@ package com.knoldus.knolbucks.repository.impl;
 
 import com.knoldus.knolbucks.model.CouponRequests;
 import com.knoldus.knolbucks.repository.CouponRequestsRepository;
+import com.knoldus.knolbucks.repository.utils.DBObject;
 import org.davidmoten.rx.jdbc.Database;
 import reactor.core.publisher.Flux;
 
@@ -10,19 +11,14 @@ import java.util.Date;
 
 public class CouponRequestsRepositoryImpl implements CouponRequestsRepository {
 
-    static Database getDBObject() {
-        Database db = Database.from("jdbc:mysql://localhost:3306/knolbucks?user=root&password=root", 10);
-        return db;
-    }
-
     Flux<CouponRequests> findAll() {
-        return Flux.fromIterable(getDBObject().select("select * from coupon_requests").autoMap(CouponRequests.class).blockingIterable());
+        return Flux.fromIterable(DBObject.getDBObject().select("select * from coupon_requests").autoMap(CouponRequests.class).blockingIterable());
     }
 
     //NJ - This is a sample code and hence has some hard coded sample data. We can make changes accordingly whenever implementing the complete routes as per the finalized schema.
     boolean insert() {
         Timestamp time = new Timestamp(new Date().getTime());
-        return getDBObject().update("insert into coupon_requests values('3', 'rid2', 'iid2', ?, 3, 2)")
+        return DBObject.getDBObject().update("insert into coupon_requests values('3', 'rid2', 'iid2', ?, 3, 2)")
         .parameter(time).counts().blockingFirst() > 0;
     }
 

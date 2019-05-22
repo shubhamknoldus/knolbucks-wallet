@@ -20,8 +20,12 @@ public class WalletRechargeRequestRepositoryImpl implements WalletRechargeReques
                         walletRechargeRequest.approvedOn(), walletRechargeRequest.quantity(), walletRechargeRequest.status()).counts().blockingFirst() > 0;
     }
 
+    Flux<WalletRechargeRequest> findByID(String id) {
+        return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName + " where id = '"+ id +"'").autoMap(WalletRechargeRequest.class).blockingIterable());
+    }
+
     Flux<WalletRechargeRequest> findAll() {
-        return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName ).autoMap(WalletRechargeRequest.class).blockingIterable());
+        return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName).autoMap(WalletRechargeRequest.class).blockingIterable());
     }
 
     public static void main(String args[]) {
@@ -68,6 +72,7 @@ public class WalletRechargeRequestRepositoryImpl implements WalletRechargeReques
         };
 //        System.out.println(new WalletRechargeRequestRepositoryImpl().save(w));
         new WalletRechargeRequestRepositoryImpl().findAll().toStream().forEach(System.out::println);
+        new WalletRechargeRequestRepositoryImpl().findByID("id1").toStream().forEach(System.out::println);
     }
 
 }

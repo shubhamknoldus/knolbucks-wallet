@@ -28,51 +28,9 @@ public class WalletRechargeRequestRepositoryImpl implements WalletRechargeReques
         return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName).autoMap(WalletRechargeRequest.class).blockingIterable());
     }
 
-    public static void main(String args[]) {
-        WalletRechargeRequest w = new WalletRechargeRequest() {
-            @Override
-            public String id() {
-                return "id111";
-            }
-
-            @Override
-            public String walletID() {
-                return "walletID11";
-            }
-
-            @Override
-            public String requesterID() {
-                return "requesterID11";
-            }
-
-            @Override
-            public String issuerID() {
-                return "issuerID11";
-            }
-
-            @Override
-            public Timestamp requestedOn() {
-                return new Timestamp(new Date().getTime());
-            }
-
-            @Override
-            public Timestamp approvedOn() {
-                return null;
-            }
-
-            @Override
-            public Integer quantity() {
-                return 10;
-            }
-
-            @Override
-            public String status() {
-                return "Pending";
-            }
-        };
-//        System.out.println(new WalletRechargeRequestRepositoryImpl().save(w));
-        new WalletRechargeRequestRepositoryImpl().findAll().toStream().forEach(System.out::println);
-        new WalletRechargeRequestRepositoryImpl().findByID("id1").toStream().forEach(System.out::println);
+    Boolean updateQuantityByID(String id, String quantity) {
+        String updateQuery = "update " + tableName + " set quantity = '" + quantity + "' where id = '" + id + "'";
+        return DBObject.getDBObject().update(updateQuery).counts().blockingFirst() > 0;
     }
 
 }

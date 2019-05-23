@@ -20,15 +20,15 @@ public class WalletRechargeRequestRepositoryImpl implements WalletRechargeReques
                         walletRechargeRequest.approvedOn(), walletRechargeRequest.quantity(), walletRechargeRequest.status()).counts().blockingFirst() > 0;
     }
 
-    Flux<WalletRechargeRequest> findByID(String id) {
+    public Flux<WalletRechargeRequest> findByID(String id) {
         return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName + " where id = '"+ id +"'").autoMap(WalletRechargeRequest.class).blockingIterable());
     }
 
-    Flux<WalletRechargeRequest> findAll() {
+    public Flux<WalletRechargeRequest> findAll() {
         return Flux.fromIterable(DBObject.getDBObject().select("select * from " + tableName).autoMap(WalletRechargeRequest.class).blockingIterable());
     }
 
-    Boolean updateQuantityByID(String id, String quantity) {
+    public Boolean updateQuantityByID(String id, String quantity) {
         String updateQuery = "update " + tableName + " set quantity = '" + quantity + "' where id = '" + id + "'";
         return DBObject.getDBObject().update(updateQuery).counts().blockingFirst() > 0;
     }
